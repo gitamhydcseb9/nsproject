@@ -1,0 +1,335 @@
+Phy/WirelessPhy set L_ 1.0                 ;#System Loss Factor
+Phy/WirelessPhy set freq_ 2.472e9          ;#channel
+Phy/WirelessPhy set bandwidth_ 11Mb        ;#Data Rate
+Phy/WirelessPhy set Pt_ 1000000.031622777        ;#Transmit Power
+Phy/WirelessPhy set CPThresh_ 10.0         ;#Collision Threshold
+Phy/WirelessPhy set CSThresh_ 5.011872e-12 ;#Carrier Sense Power
+Phy/WirelessPhy set RXThresh_ 5.82587e-09  ;#Receive Power Threshold
+Mac/802_11 set dataRate_ 11Mb              ;#Rate for Data Frames
+Mac/802_11 set basicRate_ 1Mb              ;#Rate for Control Frames
+
+# This script is created by NSG2 beta1
+# <http://wushoupong.googlepages.com/nsg>
+
+#===================================
+#     Simulation parameters setup
+#===================================
+set val(chan)   Channel/WirelessChannel    ;# channel type
+set val(prop)   Propagation/TwoRayGround   ;# radio-propagation model
+set val(netif)  Phy/WirelessPhy            ;# network interface type
+set val(mac)    Mac/802_11                 ;# MAC type
+set val(ifq)    Queue/DropTail/PriQueue    ;# interface queue type
+set val(ll)     LL                         ;# link layer type
+set val(ant)    Antenna/OmniAntenna        ;# antenna model
+set val(ifqlen) 50                         ;# max packet in ifq
+set val(nn)     16                         ;# number of mobilenodes
+set val(rp)     DSR                       ;# routing protocol
+set val(x)      704                      ;# X dimension of topography
+set val(y)      536                      ;# Y dimension of topography
+set val(stop)   30.0                         ;# time of simulation end
+set opt(energymodel)    EnergyModel          ;# Energy model 
+set opt(radiomodel)     RadioModel           ;# Radio model
+set opt(initialenergy) 30                        ;# Initial energy in Joules
+
+#===================================
+#        Initialization        
+#===================================
+#Create a ns simulator
+set ns [new Simulator]
+
+#Setup topography object
+set topo       [new Topography]
+$topo load_flatgrid $val(x) $val(y)
+create-god $val(nn)
+
+#Open the NS trace file
+set tracefile [open out.tr w]
+$ns trace-all $tracefile
+
+#Open the NAM trace file
+set namfile [open out.nam w]
+$ns namtrace-all $namfile
+$ns namtrace-all-wireless $namfile $val(x) $val(y)
+set chan [new $val(chan)];#Create wireless channel
+
+#===================================
+#     Mobile node parameter setup
+#===================================
+$ns node-config -adhocRouting  $val(rp) \
+                -llType        $val(ll) \
+                -macType       $val(mac) \
+                -ifqType       $val(ifq) \
+                -ifqLen        $val(ifqlen) \
+                -antType       $val(ant) \
+                -propType      $val(prop) \
+                -phyType       $val(netif) \
+		-initialEnergy $opt(initialenergy) \
+                -energyModel   $opt(energymodel) \
+                -channel       $chan \
+                -topoInstance  $topo \
+                -agentTrace    ON \
+                -routerTrace   ON \
+                -macTrace      ON \
+                -movementTrace ON
+
+#===================================
+#        Nodes Definition        
+#===================================
+#Create 13 nodes
+
+ for {set i 0} {$i < $val(nn) } { incr i } {
+            set n($i) [$ns node]     
+      }
+     
+## Provide initial location of mobilenodes..
+            for {set i 0} {$i < 15 } { incr i } {
+                  set xx [expr rand()*600]
+                  set yy [expr rand()*600]
+                  $n($i) set X_ $xx
+                  $n($i) set Y_ $yy
+                 
+            }
+
+$n(15) set X_ 341.161
+$n(15) set Y_ 366.31
+$n(15) set Z_ 0.0
+$ns initial_node_pos $n(15) 300
+
+
+for {set i 0} {$i < $val(nn) } { incr i } {
+upvar 0 n($i) myAlias
+   set sink($i) [new Agent/LossMonitor]
+$ns attach-agent $myAlias $sink($i)
+$myAlias color "black"
+}
+
+
+
+proc attach-CBR-traffic { node sink } {
+#Get an instance of the simulator
+set ns [Simulator instance]
+set udp [new Agent/UDP]
+$ns attach-agent $node $udp
+#Create a CBR  agent and attach it to the node
+set cbr [new Application/Traffic/CBR]
+$cbr attach-agent $udp
+$cbr set packetSize_ 500	;#sub packet size
+$cbr set interval_ 0.25
+#Attach CBR source to sink;
+$ns connect $udp $sink
+return $cbr
+}
+
+
+$ns at 0.1 "$n(0) label Node0"
+$ns at 0.1 "$n(0) color blue"
+$ns at 0.1 "$n(1) label Node1"
+$ns at 0.1 "$n(1) color blue"
+$ns at 0.1 "$n(2) label Node2"
+$ns at 0.1 "$n(2) color blue"
+$ns at 0.1 "$n(3) label Node3"
+$ns at 0.1 "$n(3) color blue"
+$ns at 0.1 "$n(4) label Node4"
+$ns at 0.1 "$n(4) color blue"
+$ns at 0.1 "$n(5) label Node5"
+$ns at 0.1 "$n(5) color blue"
+$ns at 0.1 "$n(6) label Node6"
+$ns at 0.1 "$n(6) color blue"
+$ns at 0.1 "$n(7) label Node7"
+$ns at 0.1 "$n(7) color blue"
+$ns at 0.1 "$n(8) label Node8"
+$ns at 0.1 "$n(8) color blue"
+$ns at 0.1 "$n(9) label Node9"
+$ns at 0.1 "$n(9) color blue"
+$ns at 0.1 "$n(10) label Node10"
+$ns at 0.1 "$n(10) color blue"
+$ns at 0.1 "$n(11) label Node11"
+$ns at 0.1 "$n(11) color blue"
+$ns at 0.1 "$n(12) label Node12"
+$ns at 0.1 "$n(12) color blue"
+$ns at 0.1 "$n(13) label Node12"
+$ns at 0.1 "$n(13) color blue"
+$ns at 0.1 "$n(14) label Node12"
+$ns at 0.1 "$n(14) color blue"
+$ns at 0.1 "$n(15) label DSRROUTING "
+$ns at 0.1 "$n(15) color #E4E2E6"
+
+
+upvar 0 n(0) myAlias0
+set init0 [attach-CBR-traffic $myAlias0 $sink(1)]
+$ns at 1.1 "$init0 start"
+$ns at 1.3 "$init0 stop"
+
+upvar 0 n(1) myAlias1
+set init1 [attach-CBR-traffic $myAlias1 $sink(2)]
+$ns at 1.4 "$init1 start"
+$ns at 1.6 "$init1 stop"
+
+upvar 0 n(2) myAlias2
+set init2 [attach-CBR-traffic $myAlias2 $sink(3)]
+$ns at 1.8 "$init2 start"
+$ns at 2.0 "$init2 stop"
+
+upvar 0 n(3) myAlias3
+set init3 [attach-CBR-traffic $myAlias3 $sink(4)]
+$ns at 2.1 "$init3 start"
+$ns at 2.3 "$init3 stop"
+
+upvar 0 n(4) myAlias4
+set init4 [attach-CBR-traffic $myAlias4 $sink(5)]
+$ns at 2.4 "$init4 start"
+$ns at 2.6 "$init4 stop"
+
+upvar 0 n(5) myAlias5
+set init5 [attach-CBR-traffic $myAlias5 $sink(6)]
+$ns at 2.7 "$init5 start"
+$ns at 2.9 "$init5 stop"
+
+upvar 0 n(6) myAlias6
+set init6 [attach-CBR-traffic $myAlias6 $sink(7)]
+$ns at 3.0 "$init6 start"
+$ns at 3.2 "$init6 stop"
+
+upvar 0 n(7) myAlias7
+set init7 [attach-CBR-traffic $myAlias7 $sink(8)]
+$ns at 3.3 "$init7 start"
+$ns at 3.5 "$init7 stop"
+
+upvar 0 n(8) myAlias8
+set init8 [attach-CBR-traffic $myAlias8 $sink(9)]
+$ns at 3.6 "$init8 start"
+$ns at 3.8 "$init8 stop"
+
+upvar 0 n(9) myAlias9
+set init9 [attach-CBR-traffic $myAlias9 $sink(10)]
+$ns at 3.9 "$init9 start"
+$ns at 4.1 "$init9 stop"
+
+upvar 0 n(10) myAlias10
+set init10 [attach-CBR-traffic $myAlias10 $sink(11)]
+$ns at 4.2 "$init10 start"
+$ns at 4.4 "$init10 stop"
+
+upvar 0 n(11) myAlias11
+set init11 [attach-CBR-traffic $myAlias11 $sink(12)]
+$ns at 4.2 "$init11 start"
+$ns at 4.4 "$init11 stop"
+
+upvar 0 n(12) myAlias12
+set init12 [attach-CBR-traffic $myAlias12 $sink(13)]
+$ns at 4.5 "$init12 start"
+$ns at 4.8 "$init12 stop"
+
+
+set dis [open E-Distance.txt w]
+close $dis
+proc distance1 { n1 n2 nd1 nd2 fl} {
+global r
+set dis [open E-Distance.txt a]
+set x1 [expr int([$n1 set X_])]
+set y1 [expr int([$n1 set Y_])]
+set x2 [expr int([$n2 set X_])]
+set y2 [expr int([$n2 set Y_])]
+set d [expr int(sqrt(pow(($x2-$x1),2)+pow(($y2-$y1),2)))]
+if {$fl == 21 && $d < 250} {
+puts $dis "$nd1\t$nd2\t$x1\t$y1\t$d"
+}
+close $dis
+}
+for {set j 1} {$j<=14} {incr j} {
+$ns at 1.0 "distance1 $n(0) \$n($j) 0 $j 21"
+}
+
+
+proc distance {} {
+exec sort -r -nk 5 E-Distance.txt > sortdistance.txt
+}
+
+$ns at 5 "distance"
+
+proc ch {} {
+exec awk -f datarate.awk out.tr
+}
+$ns at 8 "ch"
+
+proc ch1 {} {
+exec sort -r -nk 2 valu.txt > valu1.txt
+}
+$ns at 9 "ch1"
+
+proc ch2 {} {
+exec awk -f biterr.awk out.tr
+}
+$ns at 8 "ch2"
+
+proc ch3 {} {
+exec sort -nk 2 biterr.txt > biterr1.txt
+}
+$ns at 9 "ch3"
+
+proc ch4 {} {
+exec awk -f e2edelay.awk out.tr
+}
+$ns at 8 "ch4"
+
+proc ch5 {} {
+exec sort -nk 2 delay.txt > delay1.txt
+}
+$ns at 9 "ch5"
+
+proc chh6 { } {
+exec awk -f final.awk sortdistance.txt delay1.txt biterr1.txt valu1.txt  &
+}
+$ns  at 13 "chh6"
+
+proc external {} {
+global ns tracefile namfile sink
+for {set i 0} {$i < 15} { incr i } {
+global n
+}
+source cmsimu1.tr 
+}
+$ns at 18.0 "external"
+
+for {set i 0} {$i < 15} { incr i } {
+# 30 defines the node size for nam
+$ns initial_node_pos $n($i) 30
+}
+
+$ns at 1.1 "$ns trace-annotate \"HELLO PACKETS TRANSMISSION in all node\" "
+$ns at 22.0 "$ns trace-annotate \"Neighbor node selection\" "
+$ns at 22.2 "$ns trace-annotate \"Source sending packets to neighbor node\" "
+$ns at 22.7 "$ns trace-annotate \"Neighbor node receiving packets from source and send to destination\" "
+
+
+
+
+
+#===================================
+#        Agents Definition        
+#===================================
+
+#===================================
+#        Applications Definition        
+#===================================
+
+#===================================
+#        Termination        
+#===================================
+#Define a 'finish' procedure
+proc finish {} {
+    global ns tracefile namfile
+    $ns flush-trace
+    close $tracefile
+    close $namfile
+    exec nam out.nam &
+    exit 0
+}
+for {set i 0} {$i < $val(nn) } { incr i } {
+    $ns at $val(stop) "\$n($i) reset"
+}
+$ns at $val(stop) "$ns nam-end-wireless $val(stop)"
+$ns at $val(stop) "finish"
+$ns at $val(stop) "puts \"done\" ; $ns halt"
+$ns run
+

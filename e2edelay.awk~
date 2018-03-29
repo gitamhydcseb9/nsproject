@@ -1,0 +1,370 @@
+# ===================================================================
+
+# AWK Script for calculating: 
+
+#     => Average End-to-End Delay.
+
+# ===================================================================
+
+ 
+
+BEGIN {
+
+    seqno = -1;
+seqno1 = -1;
+seqno2 = -1;
+seqno3 = -1;
+seqno4 = -1;
+seqno5 = -1;
+seqno6 = -1;
+seqno7 = -1;
+seqno8 = -1;
+seqno9 = -1;
+seqno10 = -1;
+
+    
+
+#    droppedPackets = 0; 
+
+#    receivedPackets = 0; 
+
+ count = 0;
+ count1 = 0;
+ count2 = 0;
+ count3 = 0;
+ count4 = 0;
+ count5 = 0;
+ count6 = 0;
+ count7 = 0;
+ count8 = 0;
+ count9 = 0;
+ count10 = 0;
+ 
+
+}
+
+{
+
+    if($4 == "AGT" && $1 == "s" && seqno < $6 && $3 == "_"1"_") {
+    seqno = $6;
+    } 
+    if($4 == "AGT" && $1 == "s" && $3 == "_"1"_" ) {
+    start_time[$6] = $2;
+    } else if(($7 == "cbr") && ($1 == "r") && ($3 == "_"1"_")) {
+    end_time[$6] = $2;
+    } else if($1 == "D" && $7 == "cbr" && $3 == "_"1"_") {
+    end_time[$6] = -1;
+    } 
+
+if($4 == "AGT" && $1 == "s" && seqno1 < $6 && $3 == "_"2"_") {
+    seqno1 = $6;
+    } 
+    if($4 == "AGT" && $1 == "s" && $3 == "_"2"_" ) {
+    start_time[$6] = $2;
+    } else if(($7 == "cbr") && ($1 == "r") && ($3 == "_"2"_")) {
+    end_time[$6] = $2;
+    } else if($1 == "D" && $7 == "cbr" && $3 == "_"2"_") {
+    end_time[$6] = -1;
+    } 
+
+if($4 == "AGT" && $1 == "s" && seqno2 < $6 && $3 == "_"3"_") {
+    seqno2 = $6;
+    } 
+    if($4 == "AGT" && $1 == "s" && $3 == "_"3"_" ) {
+    start_time[$6] = $2;
+    } else if(($7 == "cbr") && ($1 == "r") && ($3 == "_"3"_")) {
+    end_time[$6] = $2;
+    } else if($1 == "D" && $7 == "cbr" && $3 == "_"3"_") {
+    end_time[$6] = -1;
+    } 
+
+if($4 == "AGT" && $1 == "s" && seqno3 < $6 && $3 == "_"4"_") {
+    seqno3 = $6;
+    } 
+    if($4 == "AGT" && $1 == "s" && $3 == "_"4"_" ) {
+    start_time[$6] = $2;
+    } else if(($7 == "cbr") && ($1 == "r") && ($3 == "_"4"_")) {
+    end_time[$6] = $2;
+    } else if($1 == "D" && $7 == "cbr" && $3 == "_"4"_") {
+    end_time[$6] = -1;
+    } 
+
+if($4 == "AGT" && $1 == "s" && seqno4 < $6 && $3 == "_"5"_") {
+    seqno4 = $6;
+    } 
+    if($4 == "AGT" && $1 == "s" && $3 == "_"5"_" ) {
+    start_time[$6] = $2;
+    } else if(($7 == "cbr") && ($1 == "r") && ($3 == "_"5"_")) {
+    end_time[$6] = $2;
+    } else if($1 == "D" && $7 == "cbr" && $3 == "_"5"_") {
+    end_time[$6] = -1;
+    } 
+
+if($4 == "AGT" && $1 == "s" && seqno5 < $6 && $3 == "_"6"_") {
+    seqno5 = $6;
+    } 
+    if($4 == "AGT" && $1 == "s" && $3 == "_"6"_" ) {
+    start_time[$6] = $2;
+    } else if(($7 == "cbr") && ($1 == "r") && ($3 == "_"6"_")) {
+    end_time[$6] = $2;
+    } else if($1 == "D" && $7 == "cbr" && $3 == "_"6"_") {
+    end_time[$6] = -1;
+    } 
+
+if($4 == "AGT" && $1 == "s" && seqno6 < $6 && $3 == "_"7"_") {
+    seqno6 = $6;
+    } 
+    if($4 == "AGT" && $1 == "s" && $3 == "_"7"_" ) {
+    start_time[$6] = $2;
+    } else if(($7 == "cbr") && ($1 == "r") && ($3 == "_"7"_")) {
+    end_time[$6] = $2;
+    } else if($1 == "D" && $7 == "cbr" && $3 == "_"7"_") {
+    end_time[$6] = -1;
+    } 
+
+if($4 == "AGT" && $1 == "s" && seqno7 < $6 && $3 == "_"8"_") {
+    seqno7 = $6;
+    } 
+    if($4 == "AGT" && $1 == "s" && $3 == "_"8"_" ) {
+    start_time[$6] = $2;
+    } else if(($7 == "cbr") && ($1 == "r") && ($3 == "_"8"_")) {
+    end_time[$6] = $2;
+    } else if($1 == "D" && $7 == "cbr" && $3 == "_"8"_") {
+    end_time[$6] = -1;
+    } 
+
+if($4 == "AGT" && $1 == "s" && seqno8 < $6 && $3 == "_"9"_") {
+    seqno8 = $6;
+    } 
+    if($4 == "AGT" && $1 == "s" && $3 == "_"9"_" ) {
+    start_time[$6] = $2;
+    } else if(($7 == "cbr") && ($1 == "r") && ($3 == "_"9"_")) {
+    end_time[$6] = $2;
+    } else if($1 == "D" && $7 == "cbr" && $3 == "_"9"_") {
+    end_time[$6] = -1;
+    } 
+
+if($4 == "AGT" && $1 == "s" && seqno9 < $6 && $3 == "_"10"_") {
+    seqno9 = $6;
+    } 
+    if($4 == "AGT" && $1 == "s" && $3 == "_"10"_" ) {
+    start_time[$6] = $2;
+    } else if(($7 == "cbr") && ($1 == "r") && ($3 == "_"10"_")) {
+    end_time[$6] = $2;
+    } else if($1 == "D" && $7 == "cbr" && $3 == "_"10"_") {
+    end_time[$6] = -1;
+    } 
+
+if($4 == "AGT" && $1 == "s" && seqno10 < $6 && $3 == "_"11"_") {
+    seqno10 = $6;
+    } 
+    if($4 == "AGT" && $1 == "s" && $3 == "_"11"_" ) {
+    start_time[$6] = $2;
+    } else if(($7 == "cbr") && ($1 == "r") && ($3 == "_"11"_")) {
+    end_time[$6] = $2;
+    } else if($1 == "D" && $7 == "cbr" && $3 == "_"11"_") {
+    end_time[$6] = -1;
+    } 
+
+
+
+
+}
+
+ 
+END {        
+  
+    for(i=0; i<=seqno; i++) {
+    if(end_time[i] > 0) {
+    delay[i] = end_time[i] - start_time[i];
+    count++;
+    }
+    else
+    {
+    delay[i] = -1;
+    }
+    }
+    for(i=0; i<=seqno; i++) {
+    if(delay[i] > 0) {
+    n_to_n_delay = n_to_n_delay + delay[i];
+    }         
+    }
+   n_to_n_delay = n_to_n_delay/count;
+
+for(i=0; i<=seqno1; i++) {
+    if(end_time[i] > 0) {
+    delay1[i] = end_time[i] - start_time[i];
+    count1++;
+    }
+    else
+    {
+    delay1[i] = -1;
+    }
+    }
+    for(i=0; i<=seqno1; i++) {
+    if(delay[i]1 > 0) {
+    n_to_n_delay1 = n_to_n_delay1 + delay1[i];
+    }         
+    }
+   n_to_n_delay1 = n_to_n_delay1/count1;
+
+for(i=0; i<=seqno2; i++) {
+    if(end_time[i] > 0) {
+    delay2[i] = end_time[i] - start_time[i];
+    count2++;
+    }
+    else
+    {
+    delay2[i] = -1;
+    }
+    }
+    for(i=0; i<=seqno2; i++) {
+    if(delay2[i] > 0) {
+    n_to_n_delay2 = n_to_n_delay2 + delay2[i];
+    }         
+    }
+   n_to_n_delay2 = n_to_n_delay2/count2;
+
+for(i=0; i<=seqno3; i++) {
+    if(end_time[i] > 0) {
+    delay3[i] = end_time[i] - start_time[i];
+    count3++;
+    }
+    else
+    {
+    delay3[i] = -1;
+    }
+    }
+    for(i=0; i<=seqno3; i++) {
+    if(delay3[i] > 0) {
+    n_to_n_delay3 = n_to_n_delay3 + delay3[i];
+    }         
+    }
+   n_to_n_delay3 = n_to_n_delay3/count3;
+
+for(i=0; i<=seqno4; i++) {
+    if(end_time[i] > 0) {
+    delay4[i] = end_time[i] - start_time[i];
+    count4++;
+    }
+    else
+    {
+    delay4[i] = -1;
+    }
+    }
+    for(i=0; i<=seqno4; i++) {
+    if(delay4[i] > 0) {
+    n_to_n_delay4 = n_to_n_delay4 + delay4[i];
+    }         
+    }
+   n_to_n_delay4 = n_to_n_delay4/count4;
+
+for(i=0; i<=seqno5; i++) {
+    if(end_time[i] > 0) {
+    delay5[i] = end_time[i] - start_time[i];
+    count5++;
+    }
+    else
+    {
+    delay5[i] = -1;
+    }
+    }
+    for(i=0; i<=seqno5; i++) {
+    if(delay5[i] > 0) {
+    n_to_n_delay5 = n_to_n_delay5 + delay5[i];
+    }         
+    }
+   n_to_n_delay5 = n_to_n_delay5/count5;
+
+for(i=0; i<=seqno6; i++) {
+    if(end_time[i] > 0) {
+    delay6[i] = end_time[i] - start_time[i];
+    count6++;
+    }
+    else
+    {
+    delay6[i] = -1;
+    }
+    }
+    for(i=0; i<=seqno6; i++) {
+    if(delay6[i] > 0) {
+    n_to_n_delay6 = n_to_n_delay6 + delay6[i];
+    }         
+    }
+   n_to_n_delay6 = n_to_n_delay6/count6;
+
+for(i=0; i<=seqno7; i++) {
+    if(end_time[i] > 0) {
+    delay7[i] = end_time[i] - start_time[i];
+    count7++;
+    }
+    else
+    {
+    delay7[i] = -1;
+    }
+    }
+    for(i=0; i<=seqno7; i++) {
+    if(delay7[i] > 0) {
+    n_to_n_delay7 = n_to_n_delay7 + delay7[i];
+    }         
+    }
+   n_to_n_delay7 = n_to_n_delay7/count7;
+
+for(i=0; i<=seqno8; i++) {
+    if(end_time[i] > 0) {
+    delay8[i] = end_time[i] - start_time[i];
+    count8++;
+    }
+    else
+    {
+    delay8[i] = -1;
+    }
+    }
+    for(i=0; i<=seqno8; i++) {
+    if(delay8[i] > 0) {
+    n_to_n_delay8 = n_to_n_delay8 + delay8[i];
+    }         
+    }
+   n_to_n_delay8 = n_to_n_delay8/count8;
+
+for(i=0; i<=seqno9; i++) {
+    if(end_time[i] > 0) {
+    delay9[i] = end_time[i] - start_time[i];
+    count9++;
+    }
+    else
+    {
+    delay9[i] = -1;
+    }
+    }
+    for(i=0; i<=seqno9; i++) {
+    if(delay9[i] > 0) {
+    n_to_n_delay9 = n_to_n_delay9 + delay9[i];
+    }         
+    }
+   n_to_n_delay9 = n_to_n_delay9/count9;
+
+for(i=0; i<=seqno10; i++) {
+    if(end_time[i] > 0) {
+    delay10[i] = end_time[i] - start_time[i];
+    count10++;
+    }
+    else
+    {
+    delay10[i] = -1;
+    }
+    }
+    for(i=0; i<=seqno10; i++) {
+    if(delay10[i] > 0) {
+    n_to_n_delay10 = n_to_n_delay10 + delay10[i];
+    }         
+    }
+   n_to_n_delay10 = n_to_n_delay10/count10;
+
+
+ 
+
+  print 1 "\t" n_to_n_delay * 1000 "\n" 2 "\t" n_to_n_delay1 * 1000 "\n" 3 "\t" n_to_n_delay2 * 1000 "\n" 4 "\t" n_to_n_delay3 * 1000 "\n" 5 "\t" n_to_n_delay4 * 1000 "\n" 6 "\t" n_to_n_delay5 * 1000 "\n" 7 "\t" n_to_n_delay6 * 1000 "\n" 8 "\t" n_to_n_delay7 * 1000 "\n" 9 "\t" n_to_n_delay8 * 1000 "\n" 10 "\t" n_to_n_delay9 * 1000 "\n" 11 "\t" n_to_n_delay10 * 1000 "\n" > "delay.txt"
+
+   
+} 

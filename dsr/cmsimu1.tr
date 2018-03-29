@@ -1,0 +1,8 @@
+$ns at 22.0 "$n(9) label sel-nbr "
+$ns at 22.0 "$n(9) color red "
+set init09	[attach-CBR-traffic $n(0) $sink(9)]
+$ns at 22.2	"$init09	 start"
+$ns at 22.4	"$init09	stop"
+set init915	[attach-CBR-traffic $n(9) $sink(14)]
+$ns at 22.5	"$init915	 start"
+$ns at 22.7	"$init915	stop"

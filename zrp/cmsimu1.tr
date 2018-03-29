@@ -1,0 +1,16 @@
+$ns at 22.0 "$n(10) label sel-nbr "
+$ns at 22.0 "$n(10) color red "
+set init06	[attach-CBR-traffic $n(0) $sink(10)]
+$ns at 22.2	"$init06	 start"
+$ns at 22.6	"$init06	stop"
+set init612	[attach-CBR-traffic $n(10) $sink(11)]
+$ns at 22.7	"$init612	 start"
+$ns at 23.0	"$init612	stop"
+$ns at 22.0 "$n(6) label sel-nbr "
+$ns at 22.0 "$n(6) color red "
+set init06	[attach-CBR-traffic $n(0) $sink(6)]
+$ns at 22.2	"$init06	 start"
+$ns at 22.6	"$init06	stop"
+set init613	[attach-CBR-traffic $n(6) $sink(11)]
+$ns at 22.7	"$init613	 start"
+$ns at 23.0	"$init613	stop"

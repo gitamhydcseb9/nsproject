@@ -1,0 +1,12 @@
+BEGIN {
+m=0;
+}
+{
+ 
+  if($1=="D" && $3 == "_"2"_") {
+   m++;
+   }
+ }
+END {
+ print m > "biterr.txt"
+    }
